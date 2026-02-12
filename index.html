@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Four Fountains · De-Stress Spa</title>
+    <!-- Font & Animation Libraries -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        /* ----- ROOT & RESET ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #faf7f2;
+            color: #2e3b3b;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* ----- Subtle animated background ----- */
+        .bg-zen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at 40% 50%, rgba(209, 231, 221, 0.3) 0%, transparent 45%),
+                        radial-gradient(circle at 80% 70%, rgba(200, 220, 210, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 10% 20%, rgba(170, 200, 190, 0.15) 0%, transparent 40%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* ----- water ripple effect (micro animation) ----- */
+        @keyframes softRipple {
+            0% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.1); }
+            100% { opacity: 0.4; transform: scale(1); }
+        }
+
+        .ripple-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="30" r="8" fill="white" opacity="0.07"/><circle cx="85" cy="70" r="15" fill="white" opacity="0.05"/><circle cx="60" cy="10" r="10" fill="white" opacity="0.04"/></svg>');
+            background-size: 300px 300px;
+            z-index: -1;
+            animation: softRipple 25s infinite alternate ease-in-out;
+            pointer-events: none;
+        }
+
+        /* ----- header / navigation ----- */
+        .navbar {
+            padding: 2rem 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(120, 140, 130, 0.15);
+        }
+
+        .logo {
+            font-size: 1.9rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            color: #2c5f4c;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+        .logo span {
+            font-size: 0.95rem;
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: #5f7a6b;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.8rem;
+            font-weight: 400;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #3f5c4f;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: #9bb0a2;
+        }
+
+        /* ----- hero ----- */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            padding: 3rem 0;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .pre-title {
+            font-size: 0.9rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: #6e8b7c;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            color: #1e3a31;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #48635a;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2c5f4c;
+            color: white;
+            padding: 1rem 2.5rem;
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 0px;
+            border: 1px solid #2c5f4c;
+            transition: 0.25s;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #2c5f4c;
+        }
+
+        /* ----- section styling ----- */
+        .section {
+            padding: 7rem 0;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            color: #1e3a31;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .section-sub {
+            font-size: 1.2rem;
+            color: #628072;
+            max-width: 680px;
+            margin-bottom: 4rem;
+            font-style: italic;
+        }
+
+        /* ----- philosophy (scientifically proven) ----- */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .philosophy-text p {
+            font-size: 1.2rem;
+            color: #3b5b4e;
+            margin-bottom: 2rem;
+        }
+
+        .pillar-list {
+            list-style: none;
+        }
+        .pillar-list li {
+            font-size: 1.1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(100, 130, 110, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .pillar-list li::before {
+            content: "𓃌";
+            color: #688b78;
+            font-size: 1.4rem;
+        }
+
+        /* ----- locations cards ----- */
+        .location-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .location-card {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 2rem 1.8rem;
+            border: 1px solid rgba(160, 180, 165, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .location-card:hover {
+            background: rgba(255, 255, 245, 0.9);
+            border-color: #a6bfb2;
+            transform: translateY(-6px);
+            box-shadow: 0 15px 30px -10px rgba(40, 70, 60, 0.1);
+        }
+
+        .location-name {
+            font-size: 1.6rem;
+            color: #285646;
+            margin-bottom: 0.6rem;
+        }
+
+        .address {
+            color: #4b665b;
+            margin-bottom: 0.8rem;
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+
+        .phone {
+            font-weight: 500;
+            color: #1a3a31;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        /* ----- services ----- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.8rem;
+        }
+
+        .service-item {
+            background: white;
+            padding: 2.2rem 1.5rem;
+            text-align: center;
+            border: 1px solid #ecf0ed;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+        }
+
+        .service-icon {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: #4b7a63;
+        }
+
+        .service-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #1e3e35;
+        }
+
+        .service-item p {
+            color: #5f776d;
+            font-size: 0.95rem;
+        }
+
+        /* ----- review / testimonial ----- */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .review-card {
+            background: rgba(255, 255, 245, 0.7);
+            backdrop-filter: blur(2px);
+            padding: 2.2rem 2rem;
+            border-left: 4px solid #a0b9a8;
+            font-style: italic;
+        }
+
+        .review-text {
+            font-size: 1.1rem;
+            color: #2c463d;
+            margin-bottom: 1.2rem;
+        }
+
+        .reviewer {
+            font-style: normal;
+            font-weight: 500;
+            color: #4a6a5a;
+            letter-spacing: 0.5px;
+        }
+        .review-location {
+            font-size: 0.85rem;
+            color: #748a80;
+            text-transform: uppercase;
+        }
+
+        /* ----- membership cta ----- */
+        .membership-cta {
+            background: #e4ece6;
+            padding: 5rem 4rem;
+            text-align: center;
+            border: 1px solid #cdddd4;
+        }
+
+        .membership-cta h2 {
+            font-size: 2.6rem;
+            color: #1b4d3d;
+        }
+
+        /* ----- footer ----- */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid #d9e0db;
+            color: #577467;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        /* ----- animations via aos ----- */
+        [data-aos] {
+            pointer-events: none;
+        }
+        [data-aos].aos-animate {
+            pointer-events: auto;
+        }
+
+        /* ----- responsiveness ----- */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 3.5rem; }
+            .philosophy-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .services-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; gap: 1rem; }
+            .nav-links { gap: 1.5rem; }
+            .hero h1 { font-size: 2.6rem; }
+            .services-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-zen"></div>
+    <div class="ripple-overlay"></div>
+
+    <div class="container">
+        <!-- header with navigation -->
+        <nav class="navbar">
+            <div class="logo">
+                Four Fountains
+                <span>De‑Stress Spa</span>
+            </div>
+            <div class="nav-links">
+                <a href="#philosophy">Ethos</a>
+                <a href="#locations">Sanctuaries</a>
+                <a href="#services">Rituals</a>
+                <a href="#reviews">Whispers</a>
+                <a href="#membership">Membership</a>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero" id="home">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
+                <div class="pre-title">scientifically proven · holistic</div>
+                <h1>stillness,<br>restored.</h1>
+                <p>a stress‑free, healthy body to reside in.</p>
+                <a href="#" class="btn">Begin your journey</a>
+            </div>
+        </section>
+
+        <!-- PHILOSOPHY: exactly from content -->
+        <section id="philosophy" class="section">
+            <div class="philosophy-grid">
+                <div data-aos="fade-right" data-aos-duration="1000">
+                    <h2 class="section-title">the four fountains way</h2>
+                    <div class="philosophy-text">
+                        <p>We are all about creating a stress‑free and healthy body for you to reside in. Bringing scientifically proven health benefits of spa to your life.</p>
+                    </div>
+                    <ul class="pillar-list">
+                        <li>total transformation – mind & body</li>
+                        <li>holistic therapies, pure family spa</li>
+                        <li>realign · reinvent · restore</li>
+                    </ul>
+                </div>
+                <div data-aos="fade-left" data-aos-duration="1000" data-aos-delay="100">
+                    <div style="background: #e1ece3; padding: 2.5rem; border-radius: 0px; border:1px solid #b7cec1;">
+                        <h3 style="font-size:1.9rem; font-family: 'Playfair Display'; color: #215a47; margin-bottom: 1rem;">“Rejuvenate, revitalize.”</h3>
+                        <p style="font-size:1.1rem;">Massage therapies · body treatments · revitalizing facials · indulgent body wraps · Thai & Ayurvedic</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATIONS (exact addresses from PCMC, Baner, Balewadi, Hinjewadi, Bannerghatta, Brookefield) -->
+        <section id="locations" class="section">
+            <h2 class="section-title" data-aos="fade-up">your sanctuaries</h2>
+            <div class="section-sub" data-aos="fade-up" data-aos-delay="80">PCMC · Baner · Balewadi · Hinjewadi · Bannerghatta · Brookefield</div>
+            <div class="location-grid">
+                <!-- PCMC Pimpri -->
+                <div class="location-card" data-aos="zoom-in" data-aos-duration="700">
+                    <div class="location-name">Pimpri · PCMC</div>
+                    <div class="address">2nd Floor Chambers, Above Tanishq, Next to Keys Hotel, Old Mumbai - Pune Hwy, Pimpri Colony, Pune - 411018</div>
+                    <div class="phone">📞 +91 80873 03999</div>
+                    <div style="margin-top:0.8rem; font-size:0.9rem;">Open till 9pm · Pure family spa</div>
+                </div>
+                <!-- Baner -->
+                <div class="location-card" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="50">
+                    <div class="location-name">Baner</div>
+                    <div class="address">Swastashree, Baner Mahalunge Road, Baner, Pune - 411045 (Near Joshi Wade Waale)</div>
+                    <div class="phone">📞 +91 88051 13399</div>
+                </div>
+                <!-- Balewadi (from Four Fountains description) -->
+                <div class="location-card" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="100">
+                    <div class="location-name">Balewadi</div>
+                    <div class="address">Serene environment, Baner – Balewadi link road. Retreat for relaxation.</div>
+                    <div class="phone">📞 +91 80873 03999</div>
+                </div>
+                <!-- Hinjewadi -->
+                <div class="location-card" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="150">
+                    <div class="location-name">Hinjewadi MIDC</div>
+                    <div class="address">TOP 10 Four Fountains De Stress Spas in Hinjewadi Midc, Pune</div>
+                    <div class="phone">📞 enquiry at +91 80873 03999</div>
+                </div>
+                <!-- Bannerghatta Road, Bangalore -->
+                <div class="location-card" data-aos="zoom-in" data-aos-duration="700">
+                    <div class="location-name">Bannerghatta Road</div>
+                    <div class="address">1st Floor, Leela Square, 4th A Cross, 3rd Main, Panduranganagar, Off Bannerghatta Road, Bangalore - 560076</div>
+                    <div class="phone">📞 080 4121 4156</div>
+                </div>
+                <!-- Brookefield -->
+                <div class="location-card" data-aos="zoom-in" data-aos-duration="700" data-aos-delay="50">
+                    <div class="location-name">Brookefield</div>
+                    <div class="address">No. 8/2 – 3rd Main, Brookefield, Bangalore</div>
+                    <div class="phone">family spa & salon</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES: exactly from the second link -->
+        <section id="services" class="section">
+            <h2 class="section-title" data-aos="fade-up">rituals of restoration</h2>
+            <div class="section-sub" data-aos="fade-up">diverse selection · best massage therapies · rejuvenating body treatments</div>
+            <div class="services-grid">
+                <div class="service-item" data-aos="flip-up" data-aos-duration="800">
+                    <div class="service-icon">🪷</div>
+                    <h3>Deep Tissue</h3>
+                    <p>Scientifically backed stress release</p>
+                </div>
+                <div class="service-item" data-aos="flip-up" data-aos-duration="800" data-aos-delay="80">
+                    <div class="service-icon">🌿</div>
+                    <h3>Ayurvedic</h3>
+                    <p>Traditional, holistic balance</p>
+                </div>
+                <div class="service-item" data-aos="flip-up" data-aos-duration="800" data-aos-delay="160">
+                    <div class="service-icon">💆🏻‍♀️</div>
+                    <h3>Thai Massage</h3>
+                    <p>Passive stretching, energizing</p>
+                </div>
+                <div class="service-item" data-aos="flip-up" data-aos-duration="800" data-aos-delay="240">
+                    <div class="service-icon">🧖🏻‍♀️</div>
+                    <h3>Body wraps & Facials</h3>
+                    <p>Revitalizing, indulgent</p>
+                </div>
+            </div>
+            <div style="margin-top: 2rem; color: #48635a; text-align:center; " data-aos="fade">
+                <p style="font-size:1.2rem;">Prices start at ₹1,199 · memberships available</p>
+            </div>
+        </section>
+
+        <!-- REVIEWS — both positive and constructive, exactly as per shared content -->
+        <section id="reviews" class="section">
+            <h2 class="section-title" data-aos="fade-up">guest whispers</h2>
+            <div class="testimonial-grid">
+                <div class="review-card" data-aos="fade-right" data-aos-offset="200">
+                    <div class="review-text">“Great service. Cost is high for massages but service is good.”</div>
+                    <div class="reviewer">— Pune visitor</div>
+                    <div class="review-location">Google review</div>
+                </div>
+                <div class="review-card" data-aos="fade-right" data-aos-delay="100">
+                    <div class="review-text">“Awesome place for relaxing, excellent therapies and packages.”</div>
+                    <div class="reviewer">— Four Fountains regular</div>
+                    <div class="review-location">PCMC</div>
+                </div>
+                <div class="review-card" data-aos="fade-right" data-aos-delay="200">
+                    <div class="review-text">“Its not at all positive. Its dull and depressing. The spa rooms are dark. Way pricey as compared to the value of massage and feel.”</div>
+                    <div class="reviewer">— honest feedback, Baner</div>
+                    <div class="review-location">16 Sept 2024</div>
+                </div>
+            </div>
+            <div style="margin-top: 2.5rem; padding: 1.5rem; background: rgba(200,210,200,0.2);" data-aos="fade-up">
+                <p style="font-style: italic; color: #3e6257;">we listen, we evolve. serenity is our promise.</p>
+            </div>
+        </section>
+
+        <!-- MEMBERSHIP & perfect place to realign -->
+        <section id="membership" class="section">
+            <div class="membership-cta" data-aos="fade-up" data-aos-duration="1200">
+                <h2 style="font-size:2.6rem;">realign · reinvent</h2>
+                <p style="font-size:1.4rem; margin: 1.5rem 0; color: #336652;">Four Fountain De-Stress SPA is the perfect place to relax, realign your mind and body and reinvent yourself. Our holistic Spa's aids your total transformation.</p>
+                <a href="#" class="btn" style="background: #174b3a; border-color:#174b3a;">Explore membership</a>
+                <p style="margin-top: 2rem; color: #48635a;">⏳ open daily 9am – 9pm · Shivratri hours may differ</p>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div>© Four Fountains De‑Stress Spa — pure family spa & salon</div>
+            <div style="display: flex; gap: 2rem;">
+                <span>est. PCMC · Baner · Balewadi · Bangalore</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- AOS animation library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            mirror: false,
+            offset: 50,
+            easing: 'ease-out-quart'
+        });
+    </script>
+
+    <!-- subtle additional micro-interaction: water like -->
+    <script>
+        (function() {
+            // gentle parallax for ripple overlay
+            window.addEventListener('mousemove', function(e) {
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+                const ripple = document.querySelector('.ripple-overlay');
+                if (ripple) {
+                    ripple.style.transform = `translate(${x * 8}px, ${y * 6}px)`;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
